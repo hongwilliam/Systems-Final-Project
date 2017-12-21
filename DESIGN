@@ -1,0 +1,25 @@
+Systems Pd 4 Final Project Design Document
+Group Members: Anthony Hom, Jake Goldman, William Hong
+Project Idea: Texas Hold'em Poker
+
+What we need:
+shared memory, networking, signals, semaphores, sockets
+
+Project description: Simulate a game of Texas hold em poker in the terminal
+-Each player connects to a server
+-What is displayed in each player's terminal:
+1) Current hand
+2) Money total
+3) Cards being displayed
+4) Prompt for betting/folding
+-Different clients from different machines all connect to one main server
+-Once you join server, you choose whether to join or create a game
+-If you create a game, set the number of players in the game and presets number of hands
+-If you want to join a game, join the server
+-Game will start and everyone will be dealt their hand and see the river
+-First, we will begin with a default preset amount of money per player
+-Later on, we might implement a file system in which amount of money is kept track in a file
+-Handle players who leave prematurely (Ctrl-C terminal)
+
+Data structures: card struct for value and suit, array of structs for deck, keep track of clients (players)
+Timeline: <to be filled in later>
