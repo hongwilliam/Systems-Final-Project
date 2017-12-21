@@ -1,2 +1,4 @@
 # Systems-Final-Project
-Texas hold em poker
+Idea: Texas hold em poker
+Group Members: William Hong, Anthony Hom, Jake Goldman
+Period 4
