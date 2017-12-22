@@ -2,24 +2,30 @@ Systems Pd 4 Final Project Design Document
 Group Members: Anthony Hom, Jake Goldman, William Hong
 Project Idea: Texas Hold'em Poker
 
-What we need:
-shared memory, networking, signals, semaphores, sockets
+Project Description:
+Our project is a simulation of a game of Texas Hold'em poker. Players will be able
+to create a game, and other players on different computers can run the program and
+join the game.
 
-Project description: Simulate a game of Texas hold em poker in the terminal
--Each player connects to a server
--What is displayed in each player's terminal:
-1) Current hand
-2) Money total
-3) Cards being displayed
-4) Prompt for betting/folding
--Different clients from different machines all connect to one main server
--Once you join server, you choose whether to join or create a game
--If you create a game, set the number of players in the game and presets number of hands
--If you want to join a game, join the server
--Game will start and everyone will be dealt their hand and see the river
--First, we will begin with a default preset amount of money per player
--Later on, we might implement a file system in which amount of money is kept track in a file
--Handle players who leave prematurely (Ctrl-C terminal)
+User Interface:
+The game will be displayed entirely in the terminal. Upon running the server program,
+the user can create a game. When creating a game, the user must set the number of
+players, set the number of hands to play for, and set the name of the game. Once
+enough players have joined, the game will begin, with players being given a set
+amount of money. To join, one must run the client program and put in the name of
+the game they're trying to join. The game must also be open. During a particular
+hand, the player will be shown their money, their hole cards, the community cards
+as they're dealt, and a prompt to either bet or fold.
 
-Data structures: card struct for value and suit, array of structs for deck, keep track of clients (players)
-Timeline: <to be filled in later>
+Technical Design:
+    - Topics:
+        1) networking: users on different computers will need to connect to a server
+        2) working with files: records of each game will be stored in a file
+        3) allocating memory: different information will need to be stored between functions
+        4) processes/signals/semaphores: used for networking
+    - Data structures:
+        Structs will be needed to represent cards and to store player information
+    - Algorithms:
+        - analyze hands and determine who wins a given round
+        - handle multiple users and user communication
+    - Work Distribution:
