@@ -1,31 +1,57 @@
 Systems Pd 4 Final Project Design Document
 Group Members: Anthony Hom, Jake Goldman, William Hong
-Project Idea: Texas Hold'em Poker
+Project Idea: Chinese Poker
 
-Project Description:
-Our project is a simulation of a game of Texas Hold'em poker. Players will be able
-to create a game, and other players on different computers can run the program and
-join the game.
+Brief Project Description:
+Our project is to create a simulation of a game of Chinese poker (informal name for the game Big Two).
+Players will be able to create a game, and other players on different computers can run the program and join the game.
 
 User Interface:
-The game will be displayed entirely in the terminal. Upon running the server program,
-the user can create a game. When creating a game, the user must set the number of
-players, set the number of hands to play for, and set the name of the game. Once
-enough players have joined, the game will begin, with players being given a set
-amount of money. To join, one must run the client program and put in the name of
-the game they're trying to join. The game must also be open. During a particular
-hand, the player will be shown their money, their hole cards, the community cards
-as they're dealt, and a prompt to either bet or fold.
+The game will be displayed entirely in the terminal. Upon running the server program, the user can create a game.
+When creating a game, the user must set the number of players (default will be 4) and the "game ID."
+Once enough players have joined, the game will begin. To join, one must run the client program and put in the "game ID" they're trying to join, which must be open.
+Each user will be able to view...
+1) their own hand
+2) the number of cards remaining in each opponent's hand
+3) the most recent cards played in the pile
+4) prompt to either select cards to play or pass their turn
+5) which player has the current turn
 
 Technical Design:
     - Topics:
         1) networking: users on different computers will need to connect to a server
         2) working with files: records of each game will be stored in a file
-        3) allocating memory: different information will need to be stored between functions
+        3) allocating memory: different information will need to be stored between functions (refer to algorithms)
         4) processes/signals/semaphores: used for networking
     - Data structures:
-        Structs will be needed to represent cards and to store player information
+        1) structs will be needed to represent cards (value, suit) and to store player information (such as hand, "turn counter" to keep track of whose turn)
+        2) the deck will essentially be an array of structs
     - Algorithms:
-        - analyze hands and determine who wins a given round
-        - handle multiple users and user communication
-    - Work Distribution:
+        1) analyze hands and determine who wins a given round (very important)
+        2) handle multiple users and user communication (very important)
+        3) keeping track of turns
+        4) shuffling and distributing cards in the deck
+        5) terminal display functions to show the stuff described in user interface section
+        6) (for later) implement AI to "fill in" for empty human player slots
+    - Work Distribution and timeline: each members are expected to contribute equally to the following aspects of the project in this ideal order
+      1) Actual gameplay aspect - shuffling and dealing, analyzing cards/combos, keeping track of turns, determining win conditions (expected completion by 1/5)
+      2) Networking aspect - server and client programs (this will take longer, expected completion by 1/12)
+      3) Refining the terminal display aspect - making our game look nice and smooth (refer to user interface section of what we want to implement) (this will be relatively easier than networking, expected completion by 1/15)
+      4) Thorough testing (before due date obviously)
+      5) (Optional) Implement AI... must first finish the basic project first
+
+Brief rules:
+1) Goal of game is to empty out all the cards in your hand
+2) Value (weakest to strongest) goes from 3 to 10, then J to A, and 2 is highest
+3) Suit ranking is tiebreaker for cards with same value: diamond -> clubs -> hearts -> spades
+4) The player with 3 of diamond gets the first freebie, but must use the 3 of diamonds into what they play
+5) During a freebie, a player can play one of three choices: single card, double, or 5 card combo
+6) Based on what was played during the freebie, the player with the next turn must play that same kind (single, double, combo) of a higher value
+7) Following combos from weakest to strongest (tie breakers are self explanatory)
+  a) Straight: any 5 cards in order of increasing value
+  b) Flush: any 5 cards with the same suit
+  c) Full house: a triple and any double (value of triple takes precedent, double is irrelevant)
+  d) Bomb: 4 of a kind and any single
+  e) Straight flush: 5 cards with the same suit and in order of increasing value
+8) If a player cannot trump the most recent kind of card(s) played at the pile, that player must "pass"
+9) If all 3 players pass if you played something, then it becomes your freebie (common strategy is to dump off your lowest cards on freebies)
