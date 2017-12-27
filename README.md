@@ -1,5 +1,5 @@
 # Systems-Final-Project
-Idea: Texas hold em poker
+Idea: Chinese Poker 
 
 Group Members: William Hong, Anthony Hom, Jake Goldman
 
