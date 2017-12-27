@@ -46,7 +46,7 @@ Brief rules:
 3) Suit ranking is tiebreaker for cards with same value: diamond -> clubs -> hearts -> spades
 4) The player with 3 of diamond gets the first freebie, but must use the 3 of diamonds into what they play
 5) During a freebie, a player can play one of three choices: single card, double, or 5 card combo
-6) Based on what was played during the freebie, the player with the next turn must play that same kind (single, double, combo) of a higher value
+6) Based on what was played during the freebie, the player with the next turn must play that same kind (single, double, combo) of a higher value or suit
 7) Following combos from weakest to strongest (tie breakers are self explanatory)
   a) Straight: any 5 cards in order of increasing value
   b) Flush: any 5 cards with the same suit
@@ -54,4 +54,4 @@ Brief rules:
   d) Bomb: 4 of a kind and any single
   e) Straight flush: 5 cards with the same suit and in order of increasing value
 8) If a player cannot trump the most recent kind of card(s) played at the pile, that player must "pass"
-9) If all 3 players pass if you played something, then it becomes your freebie (common strategy is to dump off your lowest cards on freebies)
+9) After you have played something, if all 3 players pass, then it becomes your freebie (A common strategy is to dump off your lowest cards on freebies)
