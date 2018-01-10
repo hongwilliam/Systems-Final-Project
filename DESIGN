@@ -7,10 +7,6 @@ Our project is to create a simulation of a game of Chinese poker (informal name 
 Players will be able to create a game, and other players on different computers can run the program and join the game.
 
 User Interface:
-The game will be displayed entirely in the terminal. Upon running the server program, the user can create a game.
-When creating a game, the user must set the number of players (default will be 4) and the "game ID."
-Once enough players have joined, the game will begin. To join, one must run the client program and put in the "game ID" they're trying to join, which must be open.
-Each user will be able to view...
 1) their own hand
 2) the number of cards remaining in each opponent's hand
 3) the most recent cards played in the pile
