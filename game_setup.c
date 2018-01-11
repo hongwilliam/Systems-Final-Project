@@ -2,6 +2,13 @@
 
 //CODE NOT TESTED YET
 
+//WRITE IDEAS HERE
+/**
+(1) Each card has a ranking from 0-51, each corresponding in order of increasing value
+(2) When dealing cards, the deal function first deals randomly integers from 0-51
+(3) Another function then coverts each int into the respective card
+
+*/
 
 struct card deck[52];
 struct card hand_one[13]; //assuming 4 player game
