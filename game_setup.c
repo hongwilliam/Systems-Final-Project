@@ -4,14 +4,7 @@
 //value system is 3 as 1, 4 as 2 ... A as 12, 2 as 13
 //suit system is diamonds as 1, clubs as 2, ...
 
-//WRITE IDEAS HERE
-/**
-(1) Each card has a ranking from 1-52, each corresponding in order of increasing value (no 0 indexing to make calculations easier)
-(2) When dealing cards, the deal function first deals randomly integers from 1-52
-(3) Another function then converts each int into the respective card
-*/
-
-
+//(1) INIIALIZING FUNCTIONS
 //inputs information into a card
 //this sets up the deck in order of increasing value
 //return type void
@@ -20,14 +13,13 @@ void initialize_card(int value, int suit){
   deck[ranking].value = value;
   deck[ranking].suit = suit;
   //ex: 5 of clubs (value: 3, suit: 2) -> ranking is (4 * (3-1)) + 2 = 10
-  //work on adding name later for display only
 }
 
 // return type void
 void initialize_deck(){
   int card = 1, value = 1, suit = 1;
-  while (card < 52){
-    while (suit < 4){
+  while (card < 53){
+    while (suit < 5){
         initialize_card(value, suit);
         card++;
         suit++; }
@@ -37,7 +29,7 @@ void initialize_deck(){
 }
 
 //this is ugly but necessary for easier testing
-void display_card(int ranking){
+void display_card_ranking(int ranking){
   int card_value = deck[ranking].value;
   int card_suit = deck[ranking].suit;
 
@@ -63,24 +55,106 @@ void display_card(int ranking){
   if (card_suit == 4){strcpy(s2, "Spades"); }
 
   strcat(s1, s2);
-  printf("Card: %s \n", s1);
+  printf("%s \n", s1);
 }
 
-//struct card deal_card();
-//struct card deal_hands();
+void display_card(struct card my_card){
+  int card_value = my_card.value;
+  int card_suit = my_card.suit;
+  int ranking = (4 * (card_value - 1)) + card_suit;
+  display_card_ranking(ranking);
+}
 
-//pseudo code only
-/**
+//sets the value of the a card in a hand
+void set_hand(struct card hand[], int ranking, int index){
+  int card_value = deck[ranking].value;
+  int card_suit = deck[ranking].suit;
+  hand[index].value = card_value;
+  hand[index].suit = card_suit;
+}
+
+//shoutout to stack overflow for providing useful info
+void deal_random_ints(){
+  int a = 0;
+  while (a < 52){
+    random_ints[a] = a+1;
+    a++; }
+
+  int i = 0;
+  srand(time(NULL));
+
+  while (i < 52){
+    int temp = random_ints[i];
+    int r = rand() % 52; //random index
+    random_ints[i] = random_ints[r];
+    random_ints[r] = temp;
+    i ++;
+  }
+
+  /* for testing purposes only
+  int k;
+  for (k = 0; k< 52; k++){
+    printf("%d ", random_ints[k]); } */
+}
+
 void deal_hands(){
-  set up array of ints from 0-51
-  deal each only once and randomly to each of the hands
+  deal_random_ints();
+  //distribute random ints to each of the 4 "hand" arrays
+  int i = 0, r = 0;
+  while (i < 13){
+    set_hand(hand_one, random_ints[r], i);
+    r++;
+
+    set_hand(hand_two, random_ints[r], i);
+    r++;
+
+    set_hand(hand_three, random_ints[r], i);
+    r++;
+
+    set_hand(hand_four, random_ints[r], i);
+    r++;
+
+    i++; }
 }
-*/
+
+void display_hand(struct card hand[]){
+  int i = 0;
+  while (i < 13){
+
+    display_card(hand[i]);
+    i++; }
+}
+
+//insert sorting algorithm here later to display hand?
+
 
 int main(){
-  //test later
   initialize_deck();
-  display_card(5);
-  display_card(27);
-  display_card(1);
+  printf("\ntesting card ranking 34 (J of Clubs) \n");
+  display_card_ranking(34);
+
+  printf("testing card ranking 45 (A of diamonds) \n");
+  display_card_ranking(45);
+
+  printf("testing card ranking 18 (7 of clubs) \n");
+  display_card_ranking(18);
+
+  printf("testing card ranking 48 (A of spades) \n");
+  display_card_ranking(48);
+  printf("\n");
+
+  printf("testing shuffling and dealing hands \n");
+  deal_hands();
+  printf("\nHere is hand one: \n");
+  display_hand(hand_one);
+
+  printf("\nHere is hand two: \n");
+  display_hand(hand_two);
+
+  printf("\nHere is hand three: \n");
+  display_hand(hand_three);
+
+  printf("\nHere is hand four: \n");
+  display_hand(hand_four);
+
 }
