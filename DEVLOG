@@ -1,0 +1,25 @@
+DEVLOG
+
+1/2/18 - Established gameplay basics such as how to represent cards and hands
+Cards are structs with two elements - value and suit
+
+Time in between: took notes for networking lessons
+
+1/9/18 - Discussed how to improve on established ideas such as how to shuffle and deal
+We came up with idea in which 52 random ints are distributed once to each player
+and each int will be converted to a corresponding card based on the ranking
+
+1/13/18 - Refined the card representation system in which 1 is 3 of diamonds, 2 is 3 of clubs, etc
+Fixed the code to make it cleaner and added the following essential aspects
+(1) - finalized representation of cards as (ex: 48 - "A of Spades")
+(2) - shuffling the deck
+(3) - dealing the cards to 4 even hands
+(4) - display the cards in each hand
+
+1/15/18 - Discussed things to add later for gameplay aspect
+(1) - Displaying the cards in a hand in order
+(2) - Comparing singles, doubles, and combos (very intensive part)
+(3) - Determining which player has the turn and implement the actual playing cards/passing
+Note that Jakes is currently working and reading on networking aspect which will be implemented after gameplay is finalized
+
+1/16/18 - Added pseudocode and ideas on how to compare combos
