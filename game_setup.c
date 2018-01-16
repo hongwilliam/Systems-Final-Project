@@ -103,15 +103,19 @@ void deal_hands(){
   int i = 0, r = 0;
   while (i < 13){
     set_hand(hand_one, random_ints[r], i);
+    rand_hand_one[i] = random_ints[r]; //for testing purposes only
     r++;
 
     set_hand(hand_two, random_ints[r], i);
+    rand_hand_two[i] = random_ints[r];
     r++;
 
     set_hand(hand_three, random_ints[r], i);
+    rand_hand_three[i] = random_ints[r];
     r++;
 
     set_hand(hand_four, random_ints[r], i);
+    rand_hand_four[i] = random_ints[r];
     r++;
 
     i++; }
@@ -120,12 +124,50 @@ void deal_hands(){
 void display_hand(struct card hand[]){
   int i = 0;
   while (i < 13){
-
     display_card(hand[i]);
     i++; }
 }
 
-//insert sorting algorithm here later to display hand?
+void display_ints(int hand[]){
+  printf("Here is a hand\n");
+  int i = 0;
+  while (i < 13){
+    printf("%d \n", hand[i]);
+    i++; }
+  printf("\n");
+}
+
+//used old quicksort hw from AP CS lol
+void swap(int* a, int* b){
+  int temp = *a;
+  *a = *b;
+  *b = temp; }
+
+int part (int array[], int min, int max){
+  int pivot = array[max];
+  int i = (min-1);
+  int j = min;
+  while (j <= max-1){
+    if (array[j] <= pivot){
+      i++;
+      swap(&array[i], &array[j]); }
+    j++;
+  }
+
+  swap(&array[i+1], &array[max]);
+  return (i+1);
+}
+
+void quicksort(int array[], int min, int max){
+  if (min < max){
+    int position = part(array, min, max);
+    quicksort(array, min, position-1);
+    quicksort(array, position+1, max); }
+}
+
+void sort_hand(int hand[]){
+  quicksort(hand, 0, 12);
+}
 
 
 int main(){
@@ -156,5 +198,16 @@ int main(){
 
   printf("\nHere is hand four: \n");
   display_hand(hand_four);
+
+  sort_hand(rand_hand_one);
+  sort_hand(rand_hand_two);
+  sort_hand(rand_hand_three);
+  sort_hand(rand_hand_four);
+
+  display_ints(rand_hand_one);
+  display_ints(rand_hand_two);
+  display_ints(rand_hand_three);
+  display_ints(rand_hand_four);
+
 
 }
