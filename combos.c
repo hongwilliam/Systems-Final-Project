@@ -8,6 +8,16 @@ typedef int bool;
 //ADD COMPARING SINGLES AND DOUBLES LATER (should be easy)
 //below is pseudo code only for 5 card combos!
 
+int compare_single(){
+  //fill in later... simple
+}
+
+int compare_double(){
+  //fill in later... simple
+}
+
+//maybe have one big "compare combo" function that combines all the 5 below
+
 //ADD ARGUMENTS FOR EACH FUNCTION LATER
 //any 5 in a row
 bool check_straight(){
