@@ -32,7 +32,6 @@ void set_hand(struct card hand[], int ranking, int index);
 void deal_random_ints();
 void deal_hands();
 void display_hand(struct card hand[]);
-void display_ints(int hand[]);
 void swap(int* a, int* b);
 int part (int array[], int min, int max);
 void quicksort(int array[], int min, int max);

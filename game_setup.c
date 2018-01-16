@@ -58,6 +58,8 @@ void display_card_ranking(int ranking){
   printf("%s \n", s1);
 }
 
+//(2) DISPLAY AND DISTRIBUTION FUNCTIONS
+
 void display_card(struct card my_card){
   int card_value = my_card.value;
   int card_suit = my_card.suit;
@@ -97,47 +99,9 @@ void deal_random_ints(){
     printf("%d ", random_ints[k]); } */
 }
 
-void deal_hands(){
-  deal_random_ints();
-  //distribute random ints to each of the 4 "hand" arrays
-  int i = 0, r = 0;
-  while (i < 13){
-    set_hand(hand_one, random_ints[r], i);
-    rand_hand_one[i] = random_ints[r]; //for testing purposes only
-    r++;
 
-    set_hand(hand_two, random_ints[r], i);
-    rand_hand_two[i] = random_ints[r];
-    r++;
-
-    set_hand(hand_three, random_ints[r], i);
-    rand_hand_three[i] = random_ints[r];
-    r++;
-
-    set_hand(hand_four, random_ints[r], i);
-    rand_hand_four[i] = random_ints[r];
-    r++;
-
-    i++; }
-}
-
-void display_hand(struct card hand[]){
-  int i = 0;
-  while (i < 13){
-    display_card(hand[i]);
-    i++; }
-}
-
-void display_ints(int hand[]){
-  printf("Here is a hand\n");
-  int i = 0;
-  while (i < 13){
-    printf("%d \n", hand[i]);
-    i++; }
-  printf("\n");
-}
-
-//used old quicksort hw from AP CS lol
+//(3) SORTING FUNCTIONS
+//used old quicksort hw from AP CS
 void swap(int* a, int* b){
   int temp = *a;
   *a = *b;
@@ -169,9 +133,52 @@ void sort_hand(int hand[]){
   quicksort(hand, 0, 12);
 }
 
+void deal_hands(){
+  deal_random_ints();
+  //distribute random ints to each of the 4 "hand" arrays
+  int i = 0, r = 0;
+  while (i < 13){
+    rand_hand_one[i] = random_ints[r];
+    r++;
+
+    rand_hand_two[i] = random_ints[r];
+    r++;
+
+    rand_hand_three[i] = random_ints[r];
+    r++;
+
+    rand_hand_four[i] = random_ints[r];
+    r++;
+
+    i++; }
+
+  sort_hand(rand_hand_one);
+  sort_hand(rand_hand_two);
+  sort_hand(rand_hand_three);
+  sort_hand(rand_hand_four);
+
+  //this below sorts the hands!
+  int j = 0, k = 0;
+  while (j < 13){
+    set_hand(hand_one, rand_hand_one[k], j);
+    set_hand(hand_two, rand_hand_two[k], j);
+    set_hand(hand_three, rand_hand_three[k], j);
+    set_hand(hand_four, rand_hand_four[k], j);
+    k++;
+    j++;
+  }
+}
+
+void display_hand(struct card hand[]){
+  int i = 0;
+  while (i < 13){
+    display_card(hand[i]);
+    i++; }
+}
 
 int main(){
   initialize_deck();
+  /**
   printf("\ntesting card ranking 34 (J of Clubs) \n");
   display_card_ranking(34);
 
@@ -183,7 +190,7 @@ int main(){
 
   printf("testing card ranking 48 (A of spades) \n");
   display_card_ranking(48);
-  printf("\n");
+  printf("\n"); */
 
   printf("testing shuffling and dealing hands \n");
   deal_hands();
@@ -198,16 +205,5 @@ int main(){
 
   printf("\nHere is hand four: \n");
   display_hand(hand_four);
-
-  sort_hand(rand_hand_one);
-  sort_hand(rand_hand_two);
-  sort_hand(rand_hand_three);
-  sort_hand(rand_hand_four);
-
-  display_ints(rand_hand_one);
-  display_ints(rand_hand_two);
-  display_ints(rand_hand_three);
-  display_ints(rand_hand_four);
-
 
 }
