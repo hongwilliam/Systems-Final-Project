@@ -47,8 +47,6 @@ int check_straight(struct card A, struct card B, struct card C, struct card D, s
     return 1; }
   else{
     return 0; }
-
-  //tie breaker for comparing straights: ranking of card with highest value
 }
 
 //any 5 of a suit
@@ -59,9 +57,6 @@ int check_flush(struct card A, struct card B, struct card C, struct card D, stru
     return 1; }
   else{
     return 0; }
-
-  //tie breaker with same suit: ranking of card with highest value
-  //tie breaker with different suits: higher ranked suit played
 }
 
 //input ABC as triple (increasing order) and DE as double (increasing order)
@@ -73,7 +68,6 @@ int check_house(struct card A, struct card B, struct card C, struct card D, stru
     return 1; }
   else{
     return 0; }
-  //tie breaker: higher value of triple duh
 }
 
 //input ABCD as quadruple (increasing order)
@@ -95,4 +89,29 @@ int check_straight_flush(struct card A, struct card B, struct card C, struct car
     return 1; }
   else{
     return 0; }
+}
+
+//FILL IN LATER
+
+//first, check if the combos are valid using the check functions
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2
+int compare_straight(){
+  //tie breaker for comparing straights: ranking of card with highest value
+}
+
+int compare_flush(){
+  //tie breaker with same suit: ranking of card with highest value
+  //tie breaker with different suits: higher ranked suit played
+}
+
+int compare_house(){
+  //tie breaker: higher value of triple duh
+}
+
+int compare_bomb(){
+  //tie breaker: higher value of quadruple duh
+}
+
+int compare_straight_flush(){
+  //tie breaker: ranking of card with highest value
 }
