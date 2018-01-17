@@ -91,27 +91,77 @@ int check_straight_flush(struct card A, struct card B, struct card C, struct car
     return 0; }
 }
 
-//FILL IN LATER
-
 //first, check if the combos are valid using the check functions
-//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2
-int compare_straight(){
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2. 0 if not valid
+int compare_straight(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker for comparing straights: ranking of card with highest value
+  if( (1 == check_straight(A1, A2, A3, A4, A5)) && (1 == check_straight(B1, B2, B3, B4, B5)) ){
+    if(A5.rank < B5. rank){
+      return -1; }
+    else{
+      return 1; }
+  }
+  else{
+    return 0; }
 }
 
-int compare_flush(){
-  //tie breaker with same suit: ranking of card with highest value
+int compare_flush(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker with different suits: higher ranked suit played
+  //tie breaker with same suit: ranking of card with highest value
+  //priority: (1) suit, then (2) highest ranking card
+  if ((1 == check_flush(A1, A2, A3, A4, A5)) && (1 == check_flush(B1, B2, B3, B4, B5)) ){
+    if (A5.suit == B5.suit){
+      if (A5.rank < B5. rank){
+        return -1; }
+      else{
+        return 1; }
+      }
+
+    else{
+      if (A5.suit < B5.suit){
+        return -1; }
+      else{
+        return 1; }
+    }
+  }
+  else{
+    return 0; }
 }
 
-int compare_house(){
+int compare_house(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker: higher value of triple duh
+  if ((1 == check_house(A1, A2, A3, A4, A5)) && (1 == check_house(B1, B2, B3, B4, B5)) ){
+    if (A3.rank < B3.rank){
+      return -1; }
+    else{
+      return 1; }
+
+  }
+  else{
+    return 0; }
 }
 
-int compare_bomb(){
+int compare_bomb(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker: higher value of quadruple duh
+  if ((1 == check_bomb(A1, A2, A3, A4, A5)) && (1 == check_bomb(B1, B2, B3, B4, B5)) ){
+    if (A4.rank < B4.rank){
+      return -1; }
+    else{
+      return 1; }
+  }
+  else{
+    return 0; }
 }
 
-int compare_straight_flush(){
-  //tie breaker: ranking of card with highest value
+int compare_straight_flush(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
+  //tie breaker: just use compare flush; same tie breakers as flush (suit gets precedent, then highest ranking card)
+  if ((1 == check_straight_flush(A1, A2, A3, A4, A5)) && (1 == check_straight_flush(B1, B2, B3, B4, B5)) ){
+    return compare_flush(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+  else{
+    return 0; }
 }
