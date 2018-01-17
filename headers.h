@@ -37,5 +37,10 @@ void swap(int* a, int* b);
 int part (int array[], int min, int max);
 void quicksort(int array[], int min, int max);
 void sort_hand(int hand[]);
-int compare_single(struct card A, struct card B)
-int compare_double(struct card A1, struct card A2, struct card B1, struct card B2)
+int compare_single(struct card A, struct card B);
+int compare_double(struct card A1, struct card A2, struct card B1, struct card B2);
+int check_straight(struct card A, struct card B, struct card C, struct card D, struct card E);
+int check_flush(struct card A, struct card B, struct card C, struct card D, struct card E);
+int check_house(struct card A, struct card B, struct card C, struct card D, struct card E);
+int check_bomb(struct card A, struct card B, struct card C, struct card D, struct card E);
+int check_straight_flush(struct card A, struct card B, struct card C, struct card D, struct card E);

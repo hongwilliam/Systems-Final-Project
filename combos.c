@@ -36,44 +36,66 @@ int compare_double(struct card A1, struct card A2, struct card B1, struct card B
     return 1; }
 }
 
-//have one big "compare combo" function that combines all the 5 below
+//have one big "compare combo" function that combines all the 5 below later
+
+//ASSUMPTION: each card inputted goes in increasing ranking !!!!
+
+
 
 //any 5 in a row
+//return 1 if valid, 0 if not
 int check_straight(struct card A, struct card B, struct card C, struct card D, struct card E){
-  //are the rankings increasing in order of value?
-  //^ use card.value to retrieve value (1, 2, 3, 4, ...)
-  //tie breaker: ranking of card with highest value
+  //tie breaker for comparing straights: ranking of card with highest value
+  int AB = B.rank - A.rank, BC = C.rank - B.rank, CD = D.rank - C.rank, DE = E.rank - D.rank;
+  if ( (4 <= AB <= 7) && (4 <= BC <= 7) && (4 <= CD <= 7) && (4 <= DE <= 7) ){
+    return 1; }
+  else{
+    return 0; }
 }
 
 //any 5 of a suit
+//return 1 if valid, 0 if not
 int check_flush(struct card A, struct card B, struct card C, struct card D, struct card E){
-  //do the cards share the same "divisbility" by 4?
-  //diamonds -> 1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49
-  //clubs -> 2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50
-  //hearts -> 3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51
-  //spades -> 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52
   //tie breaker with same suit: ranking of card with highest value
   //tie breaker with different suits: higher ranked suit played
+
+  //not sure if this is right
+  if (A.suit == B.suit == C.suit == D.suit == E.suit){
+    return 1; }
+  else{
+    return 0;
+  }
+
 }
 
 //any triple + double
+//input ABC as triple and DE as double
+//return 1 if valid, 0 if not
 int check_house(struct card A, struct card B, struct card C, struct card D, struct card E){
-  //check case 1: does a triple exist?
-  /** idea: values are clustered around certain rankings...
-  ex: 3s are between 1-4, 4s are between 5-8, etc...
-  check if all possible 3 card combinations of a set of 4 exists */
-
-  //check case 2: does a double exist?
+  //check case: does a triple and double exist?
+  if ((A.value == B.value == C.value) && (D.value == E.value)){
+    return 1; }
+  else{
+    return 0; }
   //tie breaker: higher value of triple duh
 }
 
 //4 of a kind and any 1 random card
+//input ABCD as quadruple
+//return 1 if valid, 0 if not
 int check_bomb(struct card A, struct card B, struct card C, struct card D, struct card E){
-  //use same idea for checking triples and doubles... clustered rankings
+  if (A.value == B.value == C.value == D.value){
+    return 1; }
+  else{
+    return 0; }
   //tie breaker: higher value of quadruple duh
 }
 
 //5 in a row with same suit
+//return 1 if valid, 0 if not
 int check_straight_flush(struct card A, struct card B, struct card C, struct card D, struct card E){
-  //if (check_straight() && check_flush()
+  if (1 == check_straight(A, B, C, D, E) == check_flush(A, B, C, D, E)){
+    return 1; }
+  else{
+    return 0; }
 }
