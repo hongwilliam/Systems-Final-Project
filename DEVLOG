@@ -25,3 +25,6 @@ Note that Jakes is currently working and reading on networking aspect which will
 1/16/18 - Added pseudocode and ideas on how to compare combos
 DISPLAYING THE HAND IN SORTED ORDER NOW WORKS!!!
 Added makefile, will definitely be changed later once we add more files
+
+1/17/18 - Added functions to check if 5 cards played make a combo and compare combos of same type to each other!
+What we need to add: compare combos of different types to each other
