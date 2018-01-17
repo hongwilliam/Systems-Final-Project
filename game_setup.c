@@ -4,6 +4,8 @@
 //value system is 3 as 1, 4 as 2 ... A as 12, 2 as 13
 //suit system is diamonds as 1, clubs as 2, ...
 
+//note to self: added function descriptiions later
+
 //(1) INIIALIZING FUNCTIONS
 //inputs information into a card
 //this sets up the deck in order of increasing value
@@ -12,6 +14,7 @@ void initialize_card(int value, int suit){
   int ranking = (4 * (value - 1)) + suit; //ex: 3 of diamond would be card 1, 3 of club would be card 2, etc
   deck[ranking].value = value;
   deck[ranking].suit = suit;
+  deck[ranking].rank = ranking;
   //ex: 5 of clubs (value: 3, suit: 2) -> ranking is (4 * (3-1)) + 2 = 10
 }
 
@@ -58,8 +61,7 @@ void display_card_ranking(int ranking){
   printf("%s \n", s1);
 }
 
-//(2) DISPLAY AND DISTRIBUTION FUNCTIONS
-
+//(2) DISPLAY AND DISTRIBUTION FUNCTION
 void display_card(struct card my_card){
   int card_value = my_card.value;
   int card_suit = my_card.suit;
@@ -178,22 +180,9 @@ void display_hand(struct card hand[]){
 
 int main(){
   initialize_deck();
-  /**
-  printf("\ntesting card ranking 34 (J of Clubs) \n");
-  display_card_ranking(34);
-
-  printf("testing card ranking 45 (A of diamonds) \n");
-  display_card_ranking(45);
-
-  printf("testing card ranking 18 (7 of clubs) \n");
-  display_card_ranking(18);
-
-  printf("testing card ranking 48 (A of spades) \n");
-  display_card_ranking(48);
-  printf("\n"); */
-
   printf("testing shuffling and dealing hands \n");
   deal_hands();
+
   printf("\nHere is hand one: \n");
   display_hand(hand_one);
 
