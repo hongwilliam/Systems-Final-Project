@@ -396,7 +396,6 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
                 if ( (A_combo_power == 2) && (B_combo_power == 2) ){
                   return compare_flush(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
                 else{
-                  if ( (A_combo_power == 1) && (B_combo_power == 1) ){
                     return compare_straight(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
                   }
                 }
@@ -404,10 +403,7 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
             }
           }
         }
-      }
-    }
-
-
+}
 
 int main(){
   initialize_deck();
@@ -428,6 +424,7 @@ int main(){
   printf("\nHere is hand four: \n");
   display_hand(hand_four);
 
+  /**
   //note: input card ranking into array index (ex: 3 of diamonds is deck[1])
   //random testing, here is the format to check and compare combos
   printf("checking valid straight (should be 1) %d \n", check_straight(deck[1], deck[6], deck[12], deck[15], deck[17]) );
@@ -464,5 +461,14 @@ int main(){
     deck[33], deck[37], deck[41], deck[45], deck[49]) );
 
   printf("comparing two straight flushes of different suit (should be -1) %d \n", compare_straight_flush(deck[33], deck[37], deck[41], deck[45], deck[49],
-    deck[2], deck[6], deck[10], deck[14], deck[18]) );
+    deck[2], deck[6], deck[10], deck[14], deck[18]) ); */
+
+  printf("now testing two combos of different type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
+    deck[1], deck[6], deck[9], deck[14], deck[19]));
+
+  printf("now testing two combos of same type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
+    deck[5], deck[9], deck[13], deck[17], deck[25]) );
+
+  printf("now testing to see if function catches invalid combo played (should be 0) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
+    deck[3], deck[4], deck[5], deck[6], deck[52]) );
 }
