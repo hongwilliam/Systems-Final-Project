@@ -54,3 +54,6 @@ int compare_bomb(struct card A1, struct card A2, struct card A3, struct card A4,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);
 int compare_straight_flush(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);
+int identify_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5);
+int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);

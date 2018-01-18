@@ -346,10 +346,73 @@ int compare_straight_flush(struct card A1, struct card A2, struct card A3, struc
     return 0; }
 }
 
+//0 = invalid, 1 = straight, 2 = flush, 3 = house, 4 = bomb, 5 = straight flush
+int identify_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5){
+  if (check_straight_flush(A1, A2, A3, A4, A5) == 1){
+    return 5; }
+  else{
+    if (check_bomb(A1, A2, A3, A4, A5) == 1){
+      return 4; }
+    else{
+      if (check_house(A1, A2, A3, A4, A5) == 1){
+        return 3; }
+      else{
+        if (check_flush(A1, A2, A3, A4, A5) == 1){
+          return 2; }
+        else{
+          if (check_straight(A1, A2, A3, A4, A5) == 1){
+            return 1; }
+          else{
+            return 0; }
+        }
+      }
+    }
+  }
+}
+
+//0 if an invalid combo was played, -1 if combo A < combo B, 1 if A > B
+//this needs to be tested in main
+int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
+  struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
+    int A_combo_power = identify_combo(A1, A2, A3, A4, A5), B_combo_power = identify_combo(B1, B2, B3, B4, B5);
+    if ( (A_combo_power == 0) || (B_combo_power == 0)){
+      return 0; }
+    else{
+      if (A_combo_power < B_combo_power){
+        return -1; }
+      else{
+        if (A_combo_power > B_combo_power){
+          return 1; }
+        else{
+          if ( (A_combo_power == 5) && (B_combo_power == 5) ){
+            return compare_straight_flush(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+          else{
+            if ( (A_combo_power == 4) && (B_combo_power == 4) ){
+              return compare_bomb(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+            else{
+              if ( (A_combo_power == 3) && (B_combo_power == 3) ){
+                return compare_house(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+              else{
+                if ( (A_combo_power == 2) && (B_combo_power == 2) ){
+                  return compare_flush(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+                else{
+                  if ( (A_combo_power == 1) && (B_combo_power == 1) ){
+                    return compare_straight(A1, A2, A3, A4, A5, B1, B2, B3, B4, B5); }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+
 int main(){
   initialize_deck();
 
-  /**
+
   printf("testing shuffling and dealing hands \n");
   deal_hands();
 
@@ -363,7 +426,7 @@ int main(){
   display_hand(hand_three);
 
   printf("\nHere is hand four: \n");
-  display_hand(hand_four); */
+  display_hand(hand_four);
 
   //note: input card ranking into array index (ex: 3 of diamonds is deck[1])
   //random testing, here is the format to check and compare combos
