@@ -29,5 +29,9 @@ Added makefile, will definitely be changed later once we add more files
 1/17/18 - Added functions to check if 5 cards played make a combo and compare combos of same type to each other!
 What we need to add: compare combos of different types to each other
 
-1/18/18 - Added function to compare combos of different types fo each other
+1/18/18 - Added function to compare combos of different types to each other
 What we need to add: now we need to start the actual gameplay such as keeping track of turns, selecting cards from hand
+
+1/19/18 - Function headers to each function in the game setup file... all the basic mechanics are implemented!
+What we need to add: NETWORKING, advanced gameplay mechanics - (keeping track of turns, choosing to play cards from hands or pass, 
+representing a pile of most recent cards played)
