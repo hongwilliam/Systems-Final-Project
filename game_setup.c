@@ -4,12 +4,11 @@
 //value system is 3 as 1, 4 as 2 ... A as 12, 2 as 13
 //suit system is diamonds as 1, clubs as 2, ...
 
-//note to self: added function descriptiions later
 
-//(1) INIIALIZING FUNCTIONS
-//inputs information into a card
-//this sets up the deck in order of increasing value
-//return type void
+//(PART 1) INIIALIZING THE DECK
+
+//purpose: inputs information into a card
+//parameters: value and suit of an individual card (refer to comments on top of the file)
 void initialize_card(int value, int suit){
   int ranking = (4 * (value - 1)) + suit; //ex: 3 of diamond would be card 1, 3 of club would be card 2, etc
   deck[ranking].value = value;
@@ -18,7 +17,9 @@ void initialize_card(int value, int suit){
   //ex: 5 of clubs (value: 3, suit: 2) -> ranking is (4 * (3-1)) + 2 = 10
 }
 
-// return type void
+//purpose: through the deck array to initialize each card's info...
+//this sets up the deck in order of increasing value
+//parameters: none
 void initialize_deck(){
   int card = 1, value = 1, suit = 1;
   while (card < 53){
@@ -31,7 +32,11 @@ void initialize_deck(){
   }
 }
 
+//(PART 2) DISPLAYING CARDS, DEALING THEM OUT, AND SORTING THE HAND
+
+//purpose: print out a card's value and suit (ex: A of Spades)
 //this is ugly but necessary for easier testing
+//parameters: card's ranking from 1-52
 void display_card_ranking(int ranking){
   int card_value = deck[ranking].value;
   int card_suit = deck[ranking].suit;
@@ -61,7 +66,8 @@ void display_card_ranking(int ranking){
   printf("%s \n", s1);
 }
 
-//(2) DISPLAY AND DISTRIBUTION FUNCTION
+//purpose: print out a card's value and suit
+//parameters: a card struct from the deck array
 void display_card(struct card my_card){
   int card_value = my_card.value;
   int card_suit = my_card.suit;
@@ -69,7 +75,10 @@ void display_card(struct card my_card){
   display_card_ranking(ranking);
 }
 
-//sets the value of the a card in a hand
+//purpose: there are 4 hand arrays (represents each player) initialized in the header file
+//this inserts a card into a specificed hand array
+//parameters: specified hand array, speified index of hand array (1 of 13 cards in the hand),
+//and ranking of the card to be inserted into the hand
 void set_hand(struct card hand[], int ranking, int index){
   int card_value = deck[ranking].value;
   int card_suit = deck[ranking].suit;
@@ -77,7 +86,9 @@ void set_hand(struct card hand[], int ranking, int index){
   hand[index].suit = card_suit;
 }
 
-//shoutout to stack overflow for providing useful info
+//purpose: there are 4 int arrays initialized in the header meant to store random ints
+//each random int distributed to each array corresponds to a card's ranking from 1-52
+//parameters: none
 void deal_random_ints(){
   int a = 0;
   while (a < 52){
@@ -101,9 +112,9 @@ void deal_random_ints(){
     printf("%d ", random_ints[k]); } */
 }
 
-
-//(3) SORTING FUNCTIONS
-//used old quicksort hw from AP CS
+//QUICKSORT FUNCTIONS BELOW
+//purpose: used old quicksort hw from AP CS
+//this is to display a dealt hand in increasing order of ranking
 void swap(int* a, int* b){
   int temp = *a;
   *a = *b;
@@ -135,6 +146,9 @@ void sort_hand(int hand[]){
   quicksort(hand, 0, 12);
 }
 
+//purpose: to distribute the random ints (representing card rankings) to each hand
+//then this function converts each int to the corresponding card on the card struct array used for gameplay
+//parameters: none
 void deal_hands(){
   deal_random_ints();
   //distribute random ints to each of the 4 "hand" arrays
@@ -171,6 +185,8 @@ void deal_hands(){
   }
 }
 
+//purpose: once the deck is shuffled and each hand receieves its cards
+//this function displays the cards in each hand, which are in sorted order to make gameplay convenient
 void display_hand(struct card hand[]){
   int i = 0;
   while (i < 13){
@@ -178,6 +194,10 @@ void display_hand(struct card hand[]){
     i++; }
 }
 
+//(PART 3) COMPARING SINGLES, DOUBLES, AND 5 CARD COMBOS
+
+//purpose: compare singles played
+//parameters: card A and card B
 //return -1 if card A < card B, 1 if card A > card B
 int compare_single(struct card A, struct card B){
   if (A.rank < B.rank){
@@ -186,7 +206,9 @@ int compare_single(struct card A, struct card B){
     return 1; }
 }
 
-//return -1 if A1-A2 double < B1-B2 double, 1 if A1-A2 > B1-B2, 0 if not valid input
+//purpose: compare doubles played
+//parameters: double pair A1-A2 are double pair B1-B2
+//return -1 if A1-A2 double < B1-B2 double, 1 if A1-A2 > B1-B2, 0 if invalid input
 int compare_double(struct card A1, struct card A2, struct card B1, struct card B2){
   //first, check if A1-A2 and B1-B2 are valid double pairs
   if (A1.value != A2.value || B1.value != B2.value){
@@ -211,9 +233,8 @@ int compare_double(struct card A1, struct card A2, struct card B1, struct card B
     return 1; }
 }
 
-
-//input ABCDE in increasing order
-//any 5 in a row
+//purpose: check to see if a combo played is a straight (any 5 in a row)
+//parameters: input cards ABCDE in increasing order of value
 //return 1 if valid, 0 if not
 int check_straight(struct card A, struct card B, struct card C, struct card D, struct card E){
   //check if values are incrementing
@@ -221,11 +242,10 @@ int check_straight(struct card A, struct card B, struct card C, struct card D, s
     return 1; }
   else{
     return 0; }
-
-  //tie breaker for comparing straights: ranking of card with highest value
 }
 
-//any 5 of a suit
+//purpose: check to see if a combo played is a flush (any 5 of a suit)
+//parametes: 5 cards ABCDE
 //return 1 if valid, 0 if not
 int check_flush(struct card A, struct card B, struct card C, struct card D, struct card E){
   //not sure if this is right
@@ -233,13 +253,10 @@ int check_flush(struct card A, struct card B, struct card C, struct card D, stru
     return 1; }
   else{
     return 0; }
-
-  //tie breaker with same suit: ranking of card with highest value
-  //tie breaker with different suits: higher ranked suit played
 }
 
-//input ABC as triple (increasing order) and DE as double (increasing order)
-//any triple + double
+//purpose: check to see if a combo played is a house (any triple + double)
+//parameters: input ABC as triple (increasing order) and DE as double (increasing order)
 //return 1 if valid, 0 if not
 int check_house(struct card A, struct card B, struct card C, struct card D, struct card E){
   //check case: does a triple and double exist?
@@ -247,21 +264,20 @@ int check_house(struct card A, struct card B, struct card C, struct card D, stru
     return 1; }
   else{
     return 0; }
-  //tie breaker: higher value of triple duh
 }
 
-//input ABCD as quadruple (increasing order)
-//4 of a kind and any 1 random card
+//purpose: check to see if a combo played is a bomb (quadruple + any single)
+//parameters: input ABCD as quadruple and E as random single
 //return 1 if valid, 0 if not
 int check_bomb(struct card A, struct card B, struct card C, struct card D, struct card E){
   if ( (A.value == B.value) && (B.value == C.value)  && (C.value == D.value) ){
     return 1; }
   else{
     return 0; }
-  //tie breaker: higher value of quadruple duh
 }
 
-//5 in a row with same suit
+//purpose: check to see if a combo played is a straight flush (5 cards in increasing order of value with same suit)
+//parameters: input cards ABCDE in increasing order of value
 //return 1 if valid, 0 if not
 int check_straight_flush(struct card A, struct card B, struct card C, struct card D, struct card E){
   //if conditions for both straight and flush are met
@@ -271,8 +287,9 @@ int check_straight_flush(struct card A, struct card B, struct card C, struct car
     return 0; }
 }
 
-//first, check if the combos are valid using the check functions
-//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2. 0 if not valid
+//purpose: compare two straights to each other
+//parameters: straight of A1, A2, A3, A4, A5 and straight of B1, B2, B3, B4, B5
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2, 0 if invalid combo was played
 int compare_straight(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker for comparing straights: ranking of card with highest value
@@ -286,6 +303,9 @@ int compare_straight(struct card A1, struct card A2, struct card A3, struct card
     return 0; }
 }
 
+//purpose: compare two flushes to each other
+//parameters: flush of A1, A2, A3, A4, A5 and flush of B1, B2, B3, B4, B5
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2, 0 if invalid combo was played
 int compare_flush(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker with different suits: higher ranked suit played
@@ -310,6 +330,9 @@ int compare_flush(struct card A1, struct card A2, struct card A3, struct card A4
     return 0; }
 }
 
+//purpose: compare two houses to each other
+//parameters: house of A1, A2, A3, A4, A5 and house of B1, B2, B3, B4, B5
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2, 0 if invalid combo was played
 int compare_house(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker: higher value of triple duh
@@ -324,6 +347,9 @@ int compare_house(struct card A1, struct card A2, struct card A3, struct card A4
     return 0; }
 }
 
+//purpose: compare two bombs to each other
+//parameters: bomb of A1, A2, A3, A4, A5 and bomb of B1, B2, B3, B4, B5
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2, 0 if invalid combo was played
 int compare_bomb(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker: higher value of quadruple duh
@@ -337,6 +363,9 @@ int compare_bomb(struct card A1, struct card A2, struct card A3, struct card A4,
     return 0; }
 }
 
+//purpose: compare two straight flushes to each other
+//parameters: straight flush of A1, A2, A3, A4, A5 and straight flush of B1, B2, B3, B4, B5
+//return -1 if combo 1 < combo 2, 1 if combo 1 > combo 2, 0 if invalid combo was played
 int compare_straight_flush(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
   //tie breaker: just use compare flush; same tie breakers as flush (suit gets precedent, then highest ranking card)
@@ -346,7 +375,9 @@ int compare_straight_flush(struct card A1, struct card A2, struct card A3, struc
     return 0; }
 }
 
-//0 = invalid, 1 = straight, 2 = flush, 3 = house, 4 = bomb, 5 = straight flush
+//purpose: identify what kind of combo is played
+//parameters: 5 cards of ABCDE
+//returns 0 = invalid, 1 = straight, 2 = flush, 3 = house, 4 = bomb, 5 = straight flush
 int identify_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5){
   if (check_straight_flush(A1, A2, A3, A4, A5) == 1){
     return 5; }
@@ -370,8 +401,10 @@ int identify_combo(struct card A1, struct card A2, struct card A3, struct card A
   }
 }
 
-//0 if an invalid combo was played, -1 if combo A < combo B, 1 if A > B
-//this needs to be tested in main
+//VERY IMPORTANT
+//purpose: compare two combos to each other, regardless of what type they are
+//parameters: combo A1, A2, A3, A4, A5 and combo B1, B2, B3, B4, B5
+//return -1 if combo A < combo B, 1 if A > B, 0 if invalid combo was played
 int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5){
     int A_combo_power = identify_combo(A1, A2, A3, A4, A5), B_combo_power = identify_combo(B1, B2, B3, B4, B5);
