@@ -198,10 +198,14 @@ void display_hand(struct card hand[]){
 //this function checks if the hand array is empty. Then it will end the game with a print message.
 //we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
 void win_condition(struct card hand[]){
-  int i = 0;
-  for(i; i < 13; i++){
-    if ((hand[i] = NULL) && true){
-      
+  for(int i : hand[13]){
+    if (hand[i] = NULL){
+      return true;
+      printf("Congratulations");
+    }
+    else{
+      return false;
+      printf("You lose");
     }
   }
 }
