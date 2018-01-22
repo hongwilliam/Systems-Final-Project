@@ -194,6 +194,18 @@ void display_hand(struct card hand[]){
     i++; }
 }
 
+//purpose: once a hand is left with no cards, the player wins
+//this function checks if the hand array is empty. Then it will end the game with a print message.
+//we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
+void win_condition(struct card hand[]){
+  int i = 0;
+  for(i; i < 13; i++){
+    if ((hand[i] = NULL) && true){
+      
+    }
+  }
+}
+
 //(PART 3) COMPARING SINGLES, DOUBLES, AND 5 CARD COMBOS
 
 //purpose: compare singles played
