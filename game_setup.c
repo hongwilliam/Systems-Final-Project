@@ -461,13 +461,14 @@ void check_start(){
     }
 }
 
-
+/**
 //purpose: once a hand is left with no cards, the player wins
 //this function checks if the hand array is empty. Then it will end the game with a print message. Return 1 to end the game. Return 0 will continue the game.
 //we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
 int check_win_condition(struct card hand[]){
-  for(int i : hand[13]){
-    if (hand[i] = NULL){
+  for(int i; i < 13; i++){
+    //remember to add function to remove cards from hands
+    if (hand[i] == NULL){
       return 1;
       win_condition = 1;
       printf("Congratulations");
@@ -476,19 +477,19 @@ int check_win_condition(struct card hand[]){
       return 0;
     }
   }
-}
+} */
 
 //purpose: take a player's input as to what kind of cards he wants to play on his free
 void process_input_free(char * line){
-  if (strncmp(line, "single", sizeof(input)) == 0){
+  if (strncmp(line, "single", sizeof(line)) == 0){
     card_type = 0;
     printf("\nCard type set as single until next free\n"); }
   else{
-    if (strncmp(line, "double", sizeof(input)) == 0){
+    if (strncmp(line, "double", sizeof(line)) == 0){
       card_type = 1;
       printf("\nCard type set as double until next free\n"); }
     else{
-      if (strncmp(line, "combo", sizeof(input)) == 0){
+      if (strncmp(line, "combo", sizeof(line)) == 0){
         card_type = 2;
         printf("\nCard type set as combo until next free\n"); }
       else{
