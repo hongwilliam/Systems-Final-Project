@@ -35,3 +35,12 @@ What we need to add: now we need to start the actual gameplay such as keeping tr
 1/19/18 - Function headers to each function in the game setup file... all the basic mechanics are implemented!
 What we need to add: NETWORKING, advanced gameplay mechanics - (keeping track of turns, choosing to play cards from hands or pass, 
 representing a pile of most recent cards played)
+
+1/22/18 - Added functions to check the win condition and to check which player will go first. 
+
+1/23/18 - Added a player ID to indicate whose turn it is. This will help in checking which player starts. 
+Also refined the win condition and check start function. 
+check_win_condition function was changed to an int type.
+ 
+
+
