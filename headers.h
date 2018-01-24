@@ -34,6 +34,10 @@ int player_four_id = 0;
 //0 indicates that no player has won yet
 int win_condition = 0;
 
+//indicates what kind of cards must be played
+//0 - single, 1 - double, 2 - combo
+int card_type;
+
 
 void initialize_card(int value, int suit);
 void initialize_deck();
@@ -69,3 +73,4 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);
 void check_start();
 int check_win_condition(struct card hand[]);
+void process_input_free(char * line);

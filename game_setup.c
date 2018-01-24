@@ -478,12 +478,46 @@ int check_win_condition(struct card hand[]){
   }
 }
 
+//purpose: take a player's input as to what kind of cards he wants to play on his free
+void process_input_free(char * line){
+  if (strncmp(line, "single", sizeof(input)) == 0){
+    card_type = 0;
+    printf("\nCard type set as single until next free\n"); }
+  else{
+    if (strncmp(line, "double", sizeof(input)) == 0){
+      card_type = 1;
+      printf("\nCard type set as double until next free\n"); }
+    else{
+      if (strncmp(line, "combo", sizeof(input)) == 0){
+        card_type = 2;
+        printf("\nCard type set as combo until next free\n"); }
+      else{
+        printf("\nInvalid card type played, please enter: single, double, or combo\n"); }
+    }
+  }
+}
+
+
 int main(){
   initialize_deck();
 
-
   printf("testing shuffling and dealing hands \n");
   deal_hands();
+
+  char input[1024];
+  while (1){
+    printf("Anthony and William's Excellent Shell:" );
+    fgets(input, 1024, stdin);
+
+    //insert terminating null into end of command
+    *strchr(input, '\n') = 0;
+
+    if (strncmp(input, "exit", sizeof(input)) != 0){
+      process_input_free(input); }
+    else{
+      exit(0); //exit the shell if user typed in exit
+    }
+  }
 
   printf("\nHere is hand one: \n");
   display_hand(hand_one);
@@ -523,14 +557,11 @@ int main(){
   printf("comparing two straight flushes of same suit (should be -1) %d \n", compare_straight_flush(deck[1], deck[5], deck[9], deck[13], deck[17],
     deck[33], deck[37], deck[41], deck[45], deck[49]) );
   printf("comparing two straight flushes of different suit (should be -1) %d \n", compare_straight_flush(deck[33], deck[37], deck[41], deck[45], deck[49],
-    deck[2], deck[6], deck[10], deck[14], deck[18]) ); */
-
+    deck[2], deck[6], deck[10], deck[14], deck[18]) );
   printf("now testing two combos of different type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[1], deck[6], deck[9], deck[14], deck[19]));
-
   printf("now testing two combos of same type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
-
   printf("now testing to see if function catches invalid combo played (should be 0) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
-    deck[3], deck[4], deck[5], deck[6], deck[52]) );
+    deck[3], deck[4], deck[5], deck[6], deck[52]) ); */
 }
