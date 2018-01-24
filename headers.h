@@ -25,6 +25,16 @@ struct card hand_two[13];
 struct card hand_three[13];
 struct card hand_four[13];
 
+//0 indicates that it's currently not that player's turn
+int player_one_id = 0;
+int player_two_id = 0;
+int player_three_id = 0;
+int player_four_id = 0;
+
+//0 indicates that no player has won yet
+int win_condition = 0;
+
+
 void initialize_card(int value, int suit);
 void initialize_deck();
 void dislay_card_ranking(int ranking);
@@ -57,3 +67,5 @@ int compare_straight_flush(struct card A1, struct card A2, struct card A3, struc
 int identify_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5);
 int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);
+void check_start();
+int check_win_condition(struct card hand[]);

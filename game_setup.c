@@ -194,28 +194,6 @@ void display_hand(struct card hand[]){
     i++; }
 }
 
-//purpose: the three of diamonds will allow a player to start the game
-void check_start(struct card hand[], int ranking, int index)){
-  if (hand[index].value = 1 && hand[index].suit = 1){ //if the card's rank is 1, or 3 of diamonds
-    // this is where the player should be prompted to player the 3 of Diamonds as a single or with other cards
-  }
-}
-
-//purpose: once a hand is left with no cards, the player wins
-//this function checks if the hand array is empty. Then it will end the game with a print message. Return 1 to end the game. Return 0 will continue the game.
-//we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
-int win_condition(struct card hand[]){
-  for(int i : hand[13]){
-    if (hand[i] = NULL){
-      return 1;
-      printf("Congratulations");
-    }
-    else{
-      return 0;
-    }
-  }
-}
-
 //(PART 3) COMPARING SINGLES, DOUBLES, AND 5 CARD COMBOS
 
 //purpose: compare singles played
@@ -460,6 +438,46 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
         }
 }
 
+//(PART 4) DEALING WITH GAMEPLAY MECHANICS (TURNS, ETC)
+
+//purpose: the three of diamonds will allow a player to start the game
+void check_start(){
+  if (hand_one[0].rank == 1){
+    player_one_id = 1; //1 indicates that it is currently that player's turn
+    printf("\nPlayer 1 will begin the game! \n");
+  }
+  else{
+    if(hand_two[0].rank == 1){
+      player_two_id = 1;
+      printf("\nPlayer 2 will begin the game! \n");}
+    else{
+      if (hand_three[0].rank == 1){
+        player_three_id = 1;
+        printf("\nPlayer 3 will begin the game! \n"); }
+      else{
+        player_four_id = 1;
+        printf("\nPlayer 4 will begin the game! \n");  }
+      }
+    }
+}
+
+
+//purpose: once a hand is left with no cards, the player wins
+//this function checks if the hand array is empty. Then it will end the game with a print message. Return 1 to end the game. Return 0 will continue the game.
+//we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
+int check_win_condition(struct card hand[]){
+  for(int i : hand[13]){
+    if (hand[i] = NULL){
+      return 1;
+      win_condition = 1;
+      printf("Congratulations");
+    }
+    else{
+      return 0;
+    }
+  }
+}
+
 int main(){
   initialize_deck();
 
@@ -484,37 +502,26 @@ int main(){
   //random testing, here is the format to check and compare combos
   printf("checking valid straight (should be 1) %d \n", check_straight(deck[1], deck[6], deck[12], deck[15], deck[17]) );
   printf("checking invalid straight (should be 0) %d \n", check_straight(deck[1], deck[2], deck[7], deck[11], deck[17]) );
-
   printf("checking valid flush (should be 1) %d \n", check_flush(deck[3], deck[11], deck[15], deck[23], deck[31]) );
   printf("checking invalid flush (should be 0) %d \n", check_flush(deck[3], deck[4], deck[11], deck[15], deck[19]) );
-
   printf("checking valid house (should be 1) %d \n", check_house(deck[50], deck[51], deck[52], deck[1], deck[4]) );
   printf("checking invalid house (should be 0) %d \n", check_house(deck[1], deck[6], deck[12], deck[15], deck[17]) );
-
   printf("checking valid bomb (should be 1) %d \n", check_bomb(deck[49], deck[50], deck[51], deck[52], deck[1]) );
   printf("checking invalid bomb (should be 0) %d \n", check_bomb(deck[1], deck[6], deck[12], deck[15], deck[17]) );
-
   printf("checking valid straight flush (should be 1) %d \n", check_straight_flush(deck[1], deck[5], deck[9], deck[13], deck[17]) );
   printf("checking invalid straight flush (should be 0) %d \n", check_straight_flush(deck[1], deck[2], deck[7], deck[11], deck[17]) );
-
   printf("comparing two straights (should be -1) %d \n", compare_straight(deck[1], deck[6], deck[9], deck[14], deck[19],
     deck[2], deck[5], deck[10], deck[13], deck[20]) );
-
   printf("comparing two flushes of different suit (should be 1) %d \n", compare_flush(deck[2], deck[6], deck[10], deck[14], deck[22],
     deck[1], deck[5], deck[9], deck[13], deck[49]) );
-
   printf("comparing two flushes of same suit (should be 1) %d \n", compare_flush(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
-
   printf("comparing two houses (should be -1) %d \n", compare_house(deck[1], deck[2], deck[3], deck[5], deck[6],
     deck[9], deck[10], deck[11], deck[13], deck[14]) );
-
   printf("comparing two bombs (should be 1) %d \n", compare_bomb(deck[49], deck[50], deck[51], deck[52], deck[48],
     deck[1], deck[2], deck[3], deck[4], deck[5]) );
-
   printf("comparing two straight flushes of same suit (should be -1) %d \n", compare_straight_flush(deck[1], deck[5], deck[9], deck[13], deck[17],
     deck[33], deck[37], deck[41], deck[45], deck[49]) );
-
   printf("comparing two straight flushes of different suit (should be -1) %d \n", compare_straight_flush(deck[33], deck[37], deck[41], deck[45], deck[49],
     deck[2], deck[6], deck[10], deck[14], deck[18]) ); */
 
