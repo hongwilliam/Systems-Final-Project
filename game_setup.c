@@ -77,7 +77,7 @@ void display_card(struct card my_card){
 
 //purpose: there are 4 hand arrays (represents each player) initialized in the header file
 //this inserts a card into a specificed hand array
-//parameters: specified hand array, speified index of hand array (1 of 13 cards in the hand),
+//parameters: specified hand array, specified index of hand array (1 of 13 cards in the hand),
 //and ranking of the card to be inserted into the hand
 void set_hand(struct card hand[], int ranking, int index){
   int card_value = deck[ranking].value;
@@ -194,18 +194,24 @@ void display_hand(struct card hand[]){
     i++; }
 }
 
+//purpose: the three of diamonds will allow a player to start the game
+void check_start(struct card hand[], int ranking, int index)){
+  if (hand[index].value = 1 && hand[index].suit = 1){ //if the card's rank is 1, or 3 of diamonds
+    // this is where the player should be prompted to player the 3 of Diamonds as a single or with other cards
+  }
+}
+
 //purpose: once a hand is left with no cards, the player wins
-//this function checks if the hand array is empty. Then it will end the game with a print message.
+//this function checks if the hand array is empty. Then it will end the game with a print message. Return 1 to end the game. Return 0 will continue the game.
 //we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
-void win_condition(struct card hand[]){
+int win_condition(struct card hand[]){
   for(int i : hand[13]){
     if (hand[i] = NULL){
-      return true;
+      return 1;
       printf("Congratulations");
     }
     else{
-      return false;
-      printf("You lose");
+      return 0;
     }
   }
 }
