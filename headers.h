@@ -7,6 +7,10 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+
+#ifndef GLOBAL_VARS
+#define GLOBAL_VARS
+
 struct card{
   int value; //3 equals 1, 4 equals 2, etc
   int suit; //diamonds = 1, clubs = 2, etc
@@ -26,13 +30,10 @@ struct card hand_three[13];
 struct card hand_four[13];
 
 //0 indicates that it's currently not that player's turn
-int player_one_id = 0;
-int player_two_id = 0;
-int player_three_id = 0;
-int player_four_id = 0;
+int current_turn;
 
 //0 indicates that no player has won yet
-int win_condition = 0;
+// int win_condition = 0;
 
 //indicates what kind of cards must be played
 //0 - single, 1 - double, 2 - combo
@@ -51,6 +52,8 @@ void swap(int* a, int* b);
 int part (int array[], int min, int max);
 void quicksort(int array[], int min, int max);
 void sort_hand(int hand[]);
+
+
 int compare_single(struct card A, struct card B);
 int compare_double(struct card A1, struct card A2, struct card B1, struct card B2);
 int check_straight(struct card A, struct card B, struct card C, struct card D, struct card E);
@@ -71,6 +74,10 @@ int compare_straight_flush(struct card A1, struct card A2, struct card A3, struc
 int identify_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5);
 int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4, struct card A5,
   struct card B1, struct card B2, struct card B3, struct card B4, struct card B5);
-void check_start();
-int check_win_condition(struct card hand[]);
-void process_input_free(char * line);
+
+
+int check_start();
+// int check_win_condition(struct card hand[]);
+// void process_input_free(char * line);
+
+#endif
