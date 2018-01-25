@@ -199,6 +199,17 @@ void display_hand(struct card hand[]){
   }
 }
 
+char get_hand(struct card hand[]){
+	int i = 0;
+	char str[] = "";
+	char *your_hand;
+	while (i < 13){
+		your_hand = strcpy(str, display_hand(hand[i]));
+		i++;
+	}
+	return your_hand;
+}
+
 //purpose: the three of diamonds will allow a player to start the game
 //returns: the id of the player whose turn it now is
 int check_start(){
