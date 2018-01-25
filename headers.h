@@ -6,6 +6,12 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <errno.h>
 
 
 #ifndef GLOBAL_VARS
@@ -79,5 +85,21 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
 int check_start();
 // int check_win_condition(struct card hand[]);
 // void process_input_free(char * line);
+
+#endif
+
+
+#ifndef NETWORKING_H
+#define NETWORKING_H
+
+#define BUFFER_SIZE 256
+#define PORT "9001"
+#define TEST_IP "127.0.0.1"
+
+void error_check(int i, char *s);
+int server_setup();
+int server_connect(int sd);
+int client_setup(char * server);
+
 
 #endif

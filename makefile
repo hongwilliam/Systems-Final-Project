@@ -1,3 +1,20 @@
+network: client server
+
+networking.o: networking.c headers.h
+	gcc -c networking.c
+
+server: server.o networking.o
+	gcc -o server server.o networking.o
+
+server.o: server.c headers.h
+	gcc -c server.c
+
+client: client.o networking.o
+		gcc -o client client.o networking.o
+
+client.o: client.c headers.h
+		gcc -c client.c
+
 testing: game_setup.o compare_hand.o
 	gcc -o testing game_setup.o compare_hand.o
 
@@ -11,6 +28,8 @@ run: testing
 	./testing
 
 clean:
-	rm testing
 	rm *.o
+	rm client
+	rm server
+	rm testing
 	rm *~
