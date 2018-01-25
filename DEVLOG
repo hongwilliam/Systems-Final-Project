@@ -41,6 +41,9 @@ representing a pile of most recent cards played)
 1/23/18 - Added a player ID to indicate whose turn it is. This will help in checking which player starts. 
 Also refined the win condition and check start function. 
 check_win_condition function was changed to an int type.
+
+1/25/18 - Added a function that returns the string of every player's hand so that it can be modified for the purpose of the game. 
+Cleaned up code.
  
 
 
