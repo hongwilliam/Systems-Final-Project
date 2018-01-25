@@ -199,8 +199,6 @@ void display_hand(struct card hand[]){
   }
 }
 
-//(PART 4) DEALING WITH GAMEPLAY MECHANICS (TURNS, ETC)
-
 //purpose: the three of diamonds will allow a player to start the game
 //returns: the id of the player whose turn it now is
 int check_start(){
