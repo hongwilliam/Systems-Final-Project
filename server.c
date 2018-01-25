@@ -96,11 +96,88 @@ int main() {
       }
     }
 
-
-
   }
 
   printf("\nAll four players have connected\n");
+  initialize_deck();
+  deal_hands();
+
+  char p1hand[1000] = get_hand( hand_one );
+  write( to_p1, p1hand, sizeof(p1hand) );
+
+  char p2hand[1000] = get_hand( hand_two );
+  write( to_p1, p2hand, sizeof(p2hand) );
+
+  char p3hand[1000] = get_hand( hand_three );
+  write( to_p1, p3hand, sizeof(p3hand) );
+
+  char p4hand[1000] = get_hand( hand_four );
+  write( to_p1, p4hand, sizeof(p4hand) );
+
+  check_start();
+
+  winner = -1
+  // run until a player wins
+  while( winner == -1 ){
+
+    // player 1
+    if (current_turn == 0){
+      char prompt[1000];
+
+      if ( strcmp(current_form, "free") == 0 ){
+        // waiting on a form
+        int wait_for_form = 1;
+        while(wait_for_form) {
+          prompt = "Please choose either single, double, or combo\n";
+          write( to_p1, prompt, sizeof(prompt) );
+
+          char response[1000];
+          read( from_p2, response, sizeof(response) );
+          if( strcmp(response, "single") ){
+            current_form = "single";
+            wait_for_form = 0;
+          } else if( strcmp(response, "double") ){
+            current_form = "double";
+            wait_for_form = 0;
+          } else if( strcmp(response, "combo") ){
+            current_form = "combo";
+            wait_for_form = 0;
+          } else {
+            prompt = "Inappropriate input\n";
+            write( to_p1, prompt, sizeof(prompt) );
+          }
+        }
+      }
+
+      // singles
+      if ( strcmp(current_form, "single") == 0 ){
+      }
+
+      // doubles
+      if ( strcmp(current_form, "double") == 0 ){
+      }
+
+      // combo
+      if ( strcmp(current_form, "combo") == 0 ){
+      }
+    }
+
+    // player 2
+    if (current_turn == 1){
+
+    }
+
+    // player 3
+    if (current_turn == 2){
+
+    }
+
+    // player 4
+    if (current_turn == 3){
+
+    }
+
+  }
 }
 
 

@@ -35,8 +35,14 @@ struct card hand_two[13];
 struct card hand_three[13];
 struct card hand_four[13];
 
-//0 indicates that it's currently not that player's turn
+//the current player (0 = player 1, 1 = player 2, etc.)
 int current_turn;
+
+//the form of the current hand
+char * current_form;
+
+//the cards of the current play
+int current_play;
 
 //0 indicates that no player has won yet
 // int win_condition = 0;
