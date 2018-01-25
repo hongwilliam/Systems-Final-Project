@@ -199,6 +199,10 @@ void display_hand(struct card hand[]){
   }
 }
 
+
+//purpose: in addition to displaying the hand, the function returns a string with all the cards in the hand
+// enables the hand to actually be modified
+//parameters: specified hand array
 char get_hand(struct card hand[]){
 	int i = 0;
 	char str[] = "";
