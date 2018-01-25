@@ -214,6 +214,13 @@ char get_hand(struct card hand[]){
 	return your_hand;
 }
 
+//purpose: should return the corresponding card struct when calling a rank
+// should return the suit and value
+// try modding and dividng the rankings to arrive at the value and suit
+int get_card(int rank){
+	int suit, value;
+	suit = rank % 
+
 //purpose: the three of diamonds will allow a player to start the game
 //returns: the id of the player whose turn it now is
 int check_start(){
