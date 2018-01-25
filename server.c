@@ -102,18 +102,6 @@ int main() {
   initialize_deck();
   deal_hands();
 
-  char p1hand[1000] = get_hand( hand_one );
-  write( to_p1, p1hand, sizeof(p1hand) );
-
-  char p2hand[1000] = get_hand( hand_two );
-  write( to_p1, p2hand, sizeof(p2hand) );
-
-  char p3hand[1000] = get_hand( hand_three );
-  write( to_p1, p3hand, sizeof(p3hand) );
-
-  char p4hand[1000] = get_hand( hand_four );
-  write( to_p1, p4hand, sizeof(p4hand) );
-
   check_start();
 
   winner = -1
@@ -123,16 +111,22 @@ int main() {
     // player 1
     if (current_turn == 0){
       char prompt[1000];
+      char response[1000];
 
+      // display the current hand
+      char p1hand[1000] = get_hand( hand_one );
+      write( to_p1, p1hand, sizeof(p1hand) );
+
+      // determine the form
       if ( strcmp(current_form, "free") == 0 ){
-        // waiting on a form
+
+        // waiting for the user to select a form
         int wait_for_form = 1;
         while(wait_for_form) {
           prompt = "Please choose either single, double, or combo\n";
           write( to_p1, prompt, sizeof(prompt) );
 
-          char response[1000];
-          read( from_p2, response, sizeof(response) );
+          read( from_p1, response, sizeof(response) );
           if( strcmp(response, "single") ){
             current_form = "single";
             wait_for_form = 0;
@@ -143,38 +137,81 @@ int main() {
             current_form = "combo";
             wait_for_form = 0;
           } else {
-            prompt = "Inappropriate input\n";
+            prompt = "Inappropriate input (hit enter)\n";
             write( to_p1, prompt, sizeof(prompt) );
           }
         }
       }
 
-      // singles
+      // handling the user single
       if ( strcmp(current_form, "single") == 0 ){
+        prompt = "Please select the card id you wish to choose\n";
+        write( to_p1, prompt, sizeof(prompt) );
+
+        read( from_p1, response, sizeof(response) );
+        int card_rank;
+        sscanf(response, "%d", &card_rank);
+        current_single = get_card( card_rank );
+
+        prompt = "Thank you for your single!\n";
+        write( to_p1, prompt, sizeof(prompt) );
       }
 
-      // doubles
+      // handling the user double
       if ( strcmp(current_form, "double") == 0 ){
+        prompt = "Please select the card ids you wish to choose separated by spaces\n";
+        write( to_p1, prompt, sizeof(prompt) );
+
+        read( from_p1, response, sizeof(response) );
+        int card_1;
+        int card_2;
+        sscanf(response, "%d %d", &card_1, &card_2);
+        current_double[0] = get_card( card_1 );
+        current_double[1] = get_card( card_2 );
+
+        prompt = "Thank you for your double!\n";
+        write( to_p1, prompt, sizeof(prompt) );
       }
 
-      // combo
+      // handling the user combo
       if ( strcmp(current_form, "combo") == 0 ){
+        prompt = "Please select the card ids you wish to choose separated by spaces\n";
+        write( to_p1, prompt, sizeof(prompt) );
+
+        read( from_p1, response, sizeof(response) );
+        int card_1, card_2, card_3, card_4, card_5;
+        sscanf(response, "%d %d %d %d %d", &card_1, &card_2, &card_3, &card_4, &card_5);
+        current_combo[0] = get_card( card_1 );
+        current_combo[1] = get_card( card_2 );
+        current_combo[2] = get_card( card_3 );
+        current_combo[3] = get_card( card_4 );
+        current_combo[4] = get_card( card_5 );
+
+        prompt = "Thank you for your combo!\n";
+        write( to_p1, prompt, sizeof(prompt) );
       }
+
+      current_turn = (current_turn + 1) % 4;
+      prompt = "Your turn is over, please wait for the next turn\n";
+      write( to_p1, prompt, sizeof(prompt) );
     }
 
     // player 2
     if (current_turn == 1){
-
+      char p2hand[1000] = get_hand( hand_two );
+      write( to_p1, p2hand, sizeof(p2hand) );
     }
 
     // player 3
     if (current_turn == 2){
-
+      char p3hand[1000] = get_hand( hand_three );
+      write( to_p1, p3hand, sizeof(p3hand) );
     }
 
     // player 4
     if (current_turn == 3){
-
+      char p4hand[1000] = get_hand( hand_four );
+      write( to_p1, p4hand, sizeof(p4hand) );
     }
 
   }

@@ -41,8 +41,12 @@ int current_turn;
 //the form of the current hand
 char * current_form;
 
-//the cards of the current play
-int current_play;
+//the most recent single
+struct card current_single;
+//the most recent double
+struct card current_double[2];
+//the most recent combo
+struct card current_combo[5];
 
 //0 indicates that no player has won yet
 // int win_condition = 0;
