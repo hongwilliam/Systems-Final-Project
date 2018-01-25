@@ -77,7 +77,7 @@ void display_card(struct card my_card){
 
 //purpose: there are 4 hand arrays (represents each player) initialized in the header file
 //this inserts a card into a specificed hand array
-//parameters: specified hand array, speified index of hand array (1 of 13 cards in the hand),
+//parameters: specified hand array, specified index of hand array (1 of 13 cards in the hand),
 //and ranking of the card to be inserted into the hand
 void set_hand(struct card hand[], int ranking, int index){
   int card_value = deck[ranking].value;
@@ -438,12 +438,87 @@ int compare_combo(struct card A1, struct card A2, struct card A3, struct card A4
         }
 }
 
+//(PART 4) DEALING WITH GAMEPLAY MECHANICS (TURNS, ETC)
+
+//purpose: the three of diamonds will allow a player to start the game
+void check_start(){
+  if (hand_one[0].rank == 1){
+    player_one_id = 1; //1 indicates that it is currently that player's turn
+    printf("\nPlayer 1 will begin the game! \n");
+  }
+  else{
+    if(hand_two[0].rank == 1){
+      player_two_id = 1;
+      printf("\nPlayer 2 will begin the game! \n");}
+    else{
+      if (hand_three[0].rank == 1){
+        player_three_id = 1;
+        printf("\nPlayer 3 will begin the game! \n"); }
+      else{
+        player_four_id = 1;
+        printf("\nPlayer 4 will begin the game! \n");  }
+      }
+    }
+}
+
+/**
+//purpose: once a hand is left with no cards, the player wins
+//this function checks if the hand array is empty. Then it will end the game with a print message. Return 1 to end the game. Return 0 will continue the game.
+//we want to check if each index of an array is empty. The hand is not shuffled when the player uses cards from whatever index.
+int check_win_condition(struct card hand[]){
+  for(int i; i < 13; i++){
+    //remember to add function to remove cards from hands
+    if (hand[i] == NULL){
+      return 1;
+      win_condition = 1;
+      printf("Congratulations");
+    }
+    else{
+      return 0;
+    }
+  }
+} */
+
+//purpose: take a player's input as to what kind of cards he wants to play on his free
+void process_input_free(char * line){
+  if (strncmp(line, "single", sizeof(line)) == 0){
+    card_type = 0;
+    printf("\nCard type set as single until next free\n"); }
+  else{
+    if (strncmp(line, "double", sizeof(line)) == 0){
+      card_type = 1;
+      printf("\nCard type set as double until next free\n"); }
+    else{
+      if (strncmp(line, "combo", sizeof(line)) == 0){
+        card_type = 2;
+        printf("\nCard type set as combo until next free\n"); }
+      else{
+        printf("\nInvalid card type played, please enter: single, double, or combo\n"); }
+    }
+  }
+}
+
+
 int main(){
   initialize_deck();
 
-
   printf("testing shuffling and dealing hands \n");
   deal_hands();
+
+  char input[1024];
+  while (1){
+    printf("Anthony and William's Excellent Shell:" );
+    fgets(input, 1024, stdin);
+
+    //insert terminating null into end of command
+    *strchr(input, '\n') = 0;
+
+    if (strncmp(input, "exit", sizeof(input)) != 0){
+      process_input_free(input); }
+    else{
+      exit(0); //exit the shell if user typed in exit
+    }
+  }
 
   printf("\nHere is hand one: \n");
   display_hand(hand_one);
@@ -462,46 +537,32 @@ int main(){
   //random testing, here is the format to check and compare combos
   printf("checking valid straight (should be 1) %d \n", check_straight(deck[1], deck[6], deck[12], deck[15], deck[17]) );
   printf("checking invalid straight (should be 0) %d \n", check_straight(deck[1], deck[2], deck[7], deck[11], deck[17]) );
-
   printf("checking valid flush (should be 1) %d \n", check_flush(deck[3], deck[11], deck[15], deck[23], deck[31]) );
   printf("checking invalid flush (should be 0) %d \n", check_flush(deck[3], deck[4], deck[11], deck[15], deck[19]) );
-
   printf("checking valid house (should be 1) %d \n", check_house(deck[50], deck[51], deck[52], deck[1], deck[4]) );
   printf("checking invalid house (should be 0) %d \n", check_house(deck[1], deck[6], deck[12], deck[15], deck[17]) );
-
   printf("checking valid bomb (should be 1) %d \n", check_bomb(deck[49], deck[50], deck[51], deck[52], deck[1]) );
   printf("checking invalid bomb (should be 0) %d \n", check_bomb(deck[1], deck[6], deck[12], deck[15], deck[17]) );
-
   printf("checking valid straight flush (should be 1) %d \n", check_straight_flush(deck[1], deck[5], deck[9], deck[13], deck[17]) );
   printf("checking invalid straight flush (should be 0) %d \n", check_straight_flush(deck[1], deck[2], deck[7], deck[11], deck[17]) );
-
   printf("comparing two straights (should be -1) %d \n", compare_straight(deck[1], deck[6], deck[9], deck[14], deck[19],
     deck[2], deck[5], deck[10], deck[13], deck[20]) );
-
   printf("comparing two flushes of different suit (should be 1) %d \n", compare_flush(deck[2], deck[6], deck[10], deck[14], deck[22],
     deck[1], deck[5], deck[9], deck[13], deck[49]) );
-
   printf("comparing two flushes of same suit (should be 1) %d \n", compare_flush(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
-
   printf("comparing two houses (should be -1) %d \n", compare_house(deck[1], deck[2], deck[3], deck[5], deck[6],
     deck[9], deck[10], deck[11], deck[13], deck[14]) );
-
   printf("comparing two bombs (should be 1) %d \n", compare_bomb(deck[49], deck[50], deck[51], deck[52], deck[48],
     deck[1], deck[2], deck[3], deck[4], deck[5]) );
-
   printf("comparing two straight flushes of same suit (should be -1) %d \n", compare_straight_flush(deck[1], deck[5], deck[9], deck[13], deck[17],
     deck[33], deck[37], deck[41], deck[45], deck[49]) );
-
   printf("comparing two straight flushes of different suit (should be -1) %d \n", compare_straight_flush(deck[33], deck[37], deck[41], deck[45], deck[49],
-    deck[2], deck[6], deck[10], deck[14], deck[18]) ); */
-
+    deck[2], deck[6], deck[10], deck[14], deck[18]) );
   printf("now testing two combos of different type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[1], deck[6], deck[9], deck[14], deck[19]));
-
   printf("now testing two combos of same type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
-
   printf("now testing to see if function catches invalid combo played (should be 0) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
-    deck[3], deck[4], deck[5], deck[6], deck[52]) );
+    deck[3], deck[4], deck[5], deck[6], deck[52]) ); */
 }
