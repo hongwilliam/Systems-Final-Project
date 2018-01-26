@@ -47,3 +47,5 @@ check_win_condition function was changed to an int type.
 
 1/25/18 - Added a function that returns the string of every player's hand so that it can be modified for the purpose of the game.
 Cleaned up code.
+
+1/26/18 - Got as much working as I reasonably could...
