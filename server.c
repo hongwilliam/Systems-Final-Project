@@ -3,12 +3,7 @@
 // void process(char *s);
 // void subserver(int from_client);
 void player_coms( int to_player, int from_player, struct card hand[]);
-void subserver1( int client_socket);
-void subserver2( int client_socket);
-void subserver3( int client_socket);
-void subserver4( int client_socket);
-
-
+void subserver( int client_socket, char * to_player_pipe, char * from_player_pipe);
 
 
 int main() {
@@ -47,9 +42,7 @@ int main() {
       int client_socket = server_connect(listen_socket);
       f = fork();
       if (f == 0) {
-        to_p1 = open("to_p1", O_RDONLY, 0644);
-        from_p1 = open("from_p1", O_WRONLY, 0644);
-        subserver(client_socket);
+        subserver(client_socket, "to_p1", "from_p1");
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -63,9 +56,7 @@ int main() {
       int client_socket = server_connect(listen_socket);
       f = fork();
       if (f == 0) {
-        to_p2 = open("to_p2", O_RDONLY, 0644);
-        from_p2 = open("from_p2", O_WRONLY, 0644);
-        subserver(client_socket);
+        subserver(client_socket, "to_p2", "from_p2");
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -79,9 +70,7 @@ int main() {
       int client_socket = server_connect(listen_socket);
       f = fork();
       if (f == 0) {
-        to_p3 = open("to_p3", O_RDONLY, 0644);
-        from_p3 = open("from_p3", O_WRONLY, 0644);
-        subserver(client_socket);
+        subserver(client_socket, "to_p3", "from_p3");
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -95,9 +84,7 @@ int main() {
       int client_socket = server_connect(listen_socket);
       f = fork();
       if (f == 0) {
-        to_p4 = open("to_p4", O_RDONLY, 0644);
-        from_p4 = open("from_p4", O_WRONLY, 0644);
-        subserver(client_socket);
+        subserver(client_socket, "to_p4", "from_p4");
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -141,6 +128,7 @@ int main() {
 
 
 
+// handles communication between the subservers and the main server
 void player_coms(int to_player, int from_player, struct card hand[]){
   char * prompt;
   char response[1000];
@@ -245,6 +233,23 @@ void player_coms(int to_player, int from_player, struct card hand[]){
 }
 
 
+// the subserver instructions
+void subserver( int client_socket, char * to_player_pipe, char * from_player_pipe){
+  int from_server = open(to_player_pipe, O_RDONLY, 0644);
+  int to_server = open(from_player_pipe, O_WRONLY, 0644);
+  char buffer[1000];
+
+  while( read(from_server, buffer, 1000) ){
+    // send the prompt to the client
+    write(client_socket, buffer, 1000);
+    // wait for the client's response
+    read( client_socket, buffer, sizeof(buffer) );
+    // send the response back to the server
+    write(to_server, buffer, 1000);
+  }
+  close(client_socket);
+  exit(0);
+}
 
 
 

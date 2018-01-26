@@ -37,7 +37,6 @@ struct card hand_four[13];
 
 //the current player (0 = player 1, 1 = player 2, etc.)
 int current_turn;
-
 //the form of the current hand
 char * current_form;
 
@@ -105,7 +104,6 @@ struct card get_card( int );
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
-#define BUFFER_SIZE 256
 #define PORT "9001"
 #define TEST_IP "127.0.0.1"
 
