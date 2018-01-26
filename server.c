@@ -43,6 +43,7 @@ int main() {
       f = fork();
       if (f == 0) {
         subserver(client_socket, "to_p1", "from_p1");
+        exit(0);
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -57,6 +58,7 @@ int main() {
       f = fork();
       if (f == 0) {
         subserver(client_socket, "to_p2", "from_p2");
+        exit(0);
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -71,6 +73,7 @@ int main() {
       f = fork();
       if (f == 0) {
         subserver(client_socket, "to_p3", "from_p3");
+        exit(0);
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -85,6 +88,7 @@ int main() {
       f = fork();
       if (f == 0) {
         subserver(client_socket, "to_p4", "from_p4");
+        exit(0);
       } else {
         player_pids[ num_players ] = f;
         num_players++;
@@ -101,6 +105,7 @@ int main() {
   // set up the game
   initialize_deck();
   deal_hands();
+  current_form = "free";
   check_start();
 
 
@@ -108,19 +113,19 @@ int main() {
   int winner = -1;
   while( winner == -1 ){
     // player 1
-    if (current_turn == 0){
+    if (current_turn == 1){
       player_coms( to_p1, from_p1, hand_one );
     }
     // player 2
-    if (current_turn == 1){
+    if (current_turn == 2){
       player_coms( to_p2, from_p2, hand_two );
     }
     // player 3
-    if (current_turn == 2){
+    if (current_turn == 3){
       player_coms( to_p3, from_p3, hand_three );
     }
     // player 4
-    if (current_turn == 3){
+    if (current_turn == 4){
       player_coms( to_p4, from_p4, hand_four );
     }
   }
@@ -134,12 +139,8 @@ void player_coms(int to_player, int from_player, struct card hand[]){
   char response[1000];
 
   // prompt the player
-  prompt = "Here is your current hand: ";
-  write( to_player, prompt, 1000);
-
-  // display the player's hand
-  char * hand_string = get_hand( hand );
-  write( to_player, hand_string, 1000 );
+  prompt = get_hand( hand, 13 );
+  write( to_player, prompt, 1000 );
 
   // handle if it's a free slot
   if ( strcmp(current_form, "free") == 0 ){
@@ -151,13 +152,14 @@ void player_coms(int to_player, int from_player, struct card hand[]){
       write( to_player, prompt, 1000 );
 
       read( from_player, response, 1000 );
-      if( strcmp(response, "single") ){
+      printf("%s\n", response);
+      if( strcmp(response, "single") == 0 ){
         current_form = "single";
         wait_for_form = 0;
-      } else if( strcmp(response, "double") ){
+      } else if( strcmp(response, "double") == 0 ){
         current_form = "double";
         wait_for_form = 0;
-      } else if( strcmp(response, "combo") ){
+      } else if( strcmp(response, "combo") == 0){
         current_form = "combo";
         wait_for_form = 0;
       } else {
@@ -237,6 +239,8 @@ void player_coms(int to_player, int from_player, struct card hand[]){
 void subserver( int client_socket, char * to_player_pipe, char * from_player_pipe){
   int from_server = open(to_player_pipe, O_RDONLY, 0644);
   int to_server = open(from_player_pipe, O_WRONLY, 0644);
+  remove(to_player_pipe);
+  remove(from_player_pipe);
   char buffer[1000];
 
   while( read(from_server, buffer, 1000) ){

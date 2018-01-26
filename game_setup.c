@@ -114,6 +114,7 @@ char * get_card_name(struct card to_name){
 char * get_hand(struct card hand[], int num_cards){
 	char * to_ret = (char *)malloc( sizeof(char) * 256 );
   int i=0;
+  strcat(to_ret, "Your hand:\n");
   while(i < num_cards){
     char * card_name = get_card_name(hand[i]);
     strcat(to_ret, card_name);
