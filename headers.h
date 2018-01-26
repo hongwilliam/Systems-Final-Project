@@ -96,8 +96,9 @@ int check_start();
 // void process_input_free(char * line);
 
 
-char * get_hand(struct card hand[]);
+char * get_hand(struct card hand[], int num_cards);
 struct card get_card( int );
+char * get_card_name(struct card to_name);
 #endif
 
 

@@ -75,6 +75,69 @@ void display_card(struct card my_card){
   display_card_ranking(ranking);
 }
 
+char * get_card_name(struct card to_name){
+  char * name;
+  name = malloc( sizeof(char) * 256 );
+  sprintf(name, "%d", to_name.rank);
+  strcat(name, ": ");
+
+  char s1[16]; //value
+  char s2[16]; //suit
+  if (to_name.value == 1){strcpy(s1, "3 of "); }
+  if (to_name.value == 2){strcpy(s1, "4 of "); }
+  if (to_name.value == 3){strcpy(s1, "5 of "); }
+  if (to_name.value == 4){strcpy(s1, "6 of "); }
+  if (to_name.value == 5){strcpy(s1, "7 of "); }
+  if (to_name.value == 6){strcpy(s1, "8 of "); }
+  if (to_name.value == 7){strcpy(s1, "9 of "); }
+  if (to_name.value == 8){strcpy(s1, "10 of "); }
+  if (to_name.value == 9){strcpy(s1, "J of "); }
+  if (to_name.value == 10){strcpy(s1, "Q of "); }
+  if (to_name.value == 11){strcpy(s1, "K of "); }
+  if (to_name.value == 12){strcpy(s1, "A of "); }
+  if (to_name.value == 13){strcpy(s1, "2 of "); }
+
+  if (to_name.suit == 1){strcpy(s2, "Diamonds\n"); }
+  if (to_name.suit == 2){strcpy(s2, "Clubs\n"); }
+  if (to_name.suit == 3){strcpy(s2, "Hearts\n"); }
+  if (to_name.suit == 4){strcpy(s2, "Spades\n"); }
+
+  strcat(s1, s2);
+  strcat(name, s1);
+
+  return name;
+}
+
+
+//purpose: returns the hand in string form to be displayed to the user
+//parameters: specified hand array, the number of cards in the hand
+char * get_hand(struct card hand[], int num_cards){
+	char * to_ret = (char *)malloc( sizeof(char) * 256 );
+  int i=0;
+  while(i < num_cards){
+    char * card_name = get_card_name(hand[i]);
+    strcat(to_ret, card_name);
+    free(card_name);
+    i++;
+  }
+	return to_ret;
+}
+
+//purpose: should return the corresponding card struct when calling a rank
+// should return the suit and value
+// try modding and dividng the rankings to arrive at the value and suit
+struct card get_card(int rank){
+  struct card ret;
+  if (rank % 4 == 0 ){
+    ret.suit = 4;
+  } else {
+    ret.suit = rank % 4;
+  }
+  ret.value = ( rank - ret.suit ) / 4 + 1;
+  ret.rank = rank;
+  return ret;
+}
+
 //purpose: there are 4 hand arrays (represents each player) initialized in the header file
 //this inserts a card into a specificed hand array
 //parameters: specified hand array, specified index of hand array (1 of 13 cards in the hand),
@@ -84,6 +147,7 @@ void set_hand(struct card hand[], int ranking, int index){
   int card_suit = deck[ranking].suit;
   hand[index].value = card_value;
   hand[index].suit = card_suit;
+  hand[index].rank = ranking;
 }
 
 //purpose: there are 4 int arrays initialized in the header meant to store random ints
@@ -197,26 +261,6 @@ void display_hand(struct card hand[]){
     display_card(hand[i]);
     i++;
   }
-}
-
-
-//purpose: in addition to displaying the hand, the function returns a string with all the cards in the hand
-// enables the hand to actually be modified
-//parameters: specified hand array
-char * get_hand(struct card hand[]){
-	int i = 0;
-	char str[] = "";
-	char * your_hand;
-
-	return your_hand;
-}
-
-//purpose: should return the corresponding card struct when calling a rank
-// should return the suit and value
-// try modding and dividng the rankings to arrive at the value and suit
-struct card get_card(int rank){
-  struct card ret;
-  return ret;
 }
 
 //purpose: the three of diamonds will allow a player to start the game
@@ -351,6 +395,26 @@ int main(){
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
   printf("now testing to see if function catches invalid combo played (should be 0) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[3], deck[4], deck[5], deck[6], deck[52]) );
+  return 0;
+}
+*/
+
+/*
+int main(int argc, char const *argv[]) {
+  struct card test = get_card(10);
+  printf("value: %d\nsuit: %d\n", test.value, test.suit);
+  char * name = get_card_name(test);
+  printf("%s\n", name );
+  free(name);
+
+  printf("\n\n");
+
+  initialize_deck();
+  deal_hands();
+
+  char * hand = get_hand( hand_one, 13 );
+  printf("%s\n", hand);
+  free(hand);
   return 0;
 }
 */
