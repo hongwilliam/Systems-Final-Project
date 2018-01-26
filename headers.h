@@ -96,6 +96,9 @@ int check_start();
 // int check_win_condition(struct card hand[]);
 // void process_input_free(char * line);
 
+
+char * get_hand(struct card hand[]);
+struct card get_card( int );
 #endif
 
 

@@ -203,23 +203,21 @@ void display_hand(struct card hand[]){
 //purpose: in addition to displaying the hand, the function returns a string with all the cards in the hand
 // enables the hand to actually be modified
 //parameters: specified hand array
-char get_hand(struct card hand[]){
+char * get_hand(struct card hand[]){
 	int i = 0;
 	char str[] = "";
-	char *your_hand;
-	while (i < 13){
-		your_hand = strcpy(str, display_hand(hand[i]));
-		i++;
-	}
+	char * your_hand;
+
 	return your_hand;
 }
 
 //purpose: should return the corresponding card struct when calling a rank
 // should return the suit and value
 // try modding and dividng the rankings to arrive at the value and suit
-int get_card(int rank){
-	int suit, value;
-	suit = rank % 
+struct card get_card(int rank){
+  struct card ret;
+  return ret;
+}
 
 //purpose: the three of diamonds will allow a player to start the game
 //returns: the id of the player whose turn it now is
@@ -285,6 +283,8 @@ int check_win_condition(struct card hand[]){
 // }
 
 
+
+/*
 int main(){
   initialize_deck();
 
@@ -318,7 +318,7 @@ int main(){
   printf("\nHere is hand four: \n");
   display_hand(hand_four);
 
-  /**
+
   //note: input card ranking into array index (ex: 3 of diamonds is deck[1])
   //random testing, here is the format to check and compare combos
   printf("checking valid straight (should be 1) %d \n", check_straight(deck[1], deck[6], deck[12], deck[15], deck[17]) );
@@ -350,6 +350,7 @@ int main(){
   printf("now testing two combos of same type.. (should be 1) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
     deck[5], deck[9], deck[13], deck[17], deck[25]) );
   printf("now testing to see if function catches invalid combo played (should be 0) %d \n", compare_combo(deck[1], deck[37], deck[41], deck[45], deck[49],
-    deck[3], deck[4], deck[5], deck[6], deck[52]) ); */
+    deck[3], deck[4], deck[5], deck[6], deck[52]) );
   return 0;
 }
+*/
